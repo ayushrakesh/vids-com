@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "409884115393",
+    "firebase_url": "https://study-app-dabfe-default-rtdb.firebaseio.com",
+    "project_id": "study-app-dabfe",
+    "storage_bucket": "study-app-dabfe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409884115393:android:18c4ee2572efe3b7502f40",
+        "android_client_info": {
+          "package_name": "com.example.vids_com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "409884115393-slpac21r0d7qnh02evj0h5lk5q8hnkt4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vids_com",
+            "certificate_hash": "0dae88e67394b95f734035646eef2c328b92b9ef"
+          }
+        },
+        {
+          "client_id": "409884115393-o7loskm5i1ioc5156gd0q0fcd92f31hc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEbhkUBznjjQaf73xwlzdJCydn5lvpRP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "409884115393-2sfkgfc0jr58tcqcf1cjfusap3otfdoh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "409884115393-3nb2h1j3516t9ootqna4n0lqqva3jfk2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.studyApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
