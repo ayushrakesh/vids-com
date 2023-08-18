@@ -41,7 +41,7 @@ class _NewsDetailsState extends State<NewsDetails> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('All news'),
+        title: const Text('All news'),
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
