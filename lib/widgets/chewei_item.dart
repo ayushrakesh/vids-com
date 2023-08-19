@@ -5,8 +5,9 @@ import 'package:video_player/video_player.dart';
 class CheweiItem extends StatefulWidget {
   final bool looping;
   final VideoPlayerController videoController;
+  final bool isPlayScreen;
 
-  CheweiItem(@required this.videoController, this.looping);
+  CheweiItem(@required this.videoController, this.looping, this.isPlayScreen);
 
   @override
   State<CheweiItem> createState() => _CheweiItemState();
@@ -19,9 +20,9 @@ class _CheweiItemState extends State<CheweiItem> {
   void initState() {
     super.initState();
     _controller = ChewieController(
-      showControls: true,
+      showControls: widget.isPlayScreen ? true : false,
       videoPlayerController: widget.videoController,
-      aspectRatio: 16 / 10,
+      aspectRatio: 16 / 9,
       looping: widget.looping,
       autoInitialize: true,
     );

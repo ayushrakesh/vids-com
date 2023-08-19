@@ -61,9 +61,13 @@ class _NewsDetailsState extends State<NewsDetails> {
               height: height * 0.3,
               // width: height * 0.2,
               child: CheweiItem(
-                VideoPlayerController.network(
-                  newsDetails!['video-link'],
+                VideoPlayerController.networkUrl(
+                  // formatHint: VideoFormat.ss,
+                  Uri.parse(
+                    newsDetails!['video-link'],
+                  ),
                 ),
+                true,
                 true,
               ),
             ),

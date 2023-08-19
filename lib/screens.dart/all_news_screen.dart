@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:vids_com/screens.dart/news_details.dart';
 import 'package:vids_com/widgets/chewei_item.dart';
-import 'package:path/path.dart';
 
 class AllNewsScreen extends StatefulWidget {
   @override
@@ -23,6 +21,7 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // toolbarHeight: kToolbarHeight,
         title: Text('News'),
         centerTitle: true,
       ),
@@ -45,8 +44,8 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: width * 0.05,
-        ),
+            // horizontal: width * 0.05,
+            ),
         child: StreamBuilder(
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -54,55 +53,94 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
                 itemBuilder: (ctx, index) {
                   return InkWell(
                     onTap: () {
-                      Navigator.of(context).pushNamed(NewsDetails.routeName,
-                          arguments: [
-                            snapshot.data!.docs[index],
-                            snapshot.data!.docs[index]
-                          ]);
+                      Navigator.of(context).pushNamed(
+                        NewsDetails.routeName,
+                        arguments: [
+                          snapshot.data!.docs[index],
+                          snapshot.data!.docs[index]
+                        ],
+                      );
                     },
                     child: Card(
-                      child: Row(
+                      elevation: 3,
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            height: height * 0.2,
-                            width: height * 0.25,
+                            height: height * 0.3,
+                            width: double.infinity,
                             child: CheweiItem(
-                              VideoPlayerController.network(
-                                snapshot.data!.docs[index].data()['video-link'],
+                              VideoPlayerController.networkUrl(
+                                Uri.parse(
+                                  snapshot.data!.docs[index]['video-link'],
+                                ),
                               ),
+                              false,
                               false,
                             ),
                           ),
-                          Column(
-                            children: [
-                              Text(
-                                style: TextStyle(fontSize: 18),
-                                snapshot.data!.docs[index]['title'].toString(),
-                              ),
-                              Text(
-                                style: TextStyle(fontSize: 12),
-                                snapshot.data!.docs[index]['date'].toString(),
-                              ),
-                              Text(
-                                style: TextStyle(fontSize: 12),
-                                snapshot.data!.docs[index]['location']
-                                    .toString(),
-                              ),
-                              Text(
-                                style: TextStyle(fontSize: 12),
-                                snapshot.data!.docs[index]['views'].toString(),
-                              ),
-                              Row(
-                                children: [
-                                  Text('Category'),
-                                  Text(
-                                    snapshot.data!.docs[index]['category'],
-                                    style: TextStyle(fontSize: 12),
-                                  )
-                                ],
-                              )
-                            ],
+                          Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'Lato',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      snapshot.data!.docs[index]['title']
+                                          .toString(),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          style: TextStyle(fontSize: 12),
+                                          snapshot.data!.docs[index]['views']
+                                              .toString(),
+                                        ),
+                                        Text(
+                                          style: TextStyle(fontSize: 12),
+                                          ' views',
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Gap(height * 0.005),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Posted by - ',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w300,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        Text(
+                                          snapshot.data!.docs[index]
+                                              ['posted-by'],
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      style: TextStyle(fontSize: 12),
+                                      snapshot.data!.docs[index]['date']
+                                          .toString(),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ],
                       ),
