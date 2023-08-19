@@ -51,12 +51,14 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
             if (snapshot.hasData) {
               return ListView.builder(
                 itemBuilder: (ctx, index) {
+                  final newsdoc = snapshot.data!.docs[index].reference.id;
                   return InkWell(
                     onTap: () {
+                      print(newsdoc);
                       Navigator.of(context).pushNamed(
                         NewsDetails.routeName,
                         arguments: [
-                          snapshot.data!.docs[index]['id'],
+                          newsdoc,
                           // snapshot.data!.docs[index]
                         ],
                       );
