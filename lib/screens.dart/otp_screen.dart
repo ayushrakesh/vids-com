@@ -22,7 +22,10 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final phone = ModalRoute.of(context)!.settings.arguments as String;
+    final phone =
+        (ModalRoute.of(context)!.settings.arguments as List)[0] as String;
+    final username =
+        (ModalRoute.of(context)!.settings.arguments as List)[1] as String;
 
     final formKey = GlobalKey<FormState>();
 
@@ -86,7 +89,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   Text('Did not get otp? '),
                   TextButton(
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       'Resend OTP',
                       style: TextStyle(
                         color: Colors.pink,

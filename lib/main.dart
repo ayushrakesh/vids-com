@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:vids_com/routes.dart';
 import 'package:vids_com/screens.dart/all_news_screen.dart';
 import 'package:vids_com/screens.dart/login_screen.dart';
+import 'package:vids_com/screens.dart/otp_screen.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'screens.dart/news_details.dart';
 
 void main() async {
@@ -18,7 +18,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is  the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,6 +28,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: LoginScreen(),
       home: AllNewsScreen(),
+      // home: OTPScreen(),
       routes: routes,
     );
   }

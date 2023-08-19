@@ -56,8 +56,8 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
                       Navigator.of(context).pushNamed(
                         NewsDetails.routeName,
                         arguments: [
-                          snapshot.data!.docs[index],
-                          snapshot.data!.docs[index]
+                          snapshot.data!.docs[index]['id'],
+                          // snapshot.data!.docs[index]
                         ],
                       );
                     },

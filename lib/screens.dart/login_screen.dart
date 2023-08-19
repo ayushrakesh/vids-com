@@ -18,9 +18,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final phoneCtl = TextEditingController();
   final smsCtl = TextEditingController();
+  final usernameCtl = TextEditingController();
 
   String? phone;
   String? sms;
+  String? username;
 
   final formKey = GlobalKey<FormState>();
 
@@ -80,19 +82,19 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               Gap(height * 0.1),
-              Text(
+              const Text(
                 'Welcome Back',
                 style: TextStyle(
                     letterSpacing: 0.8,
-                    color: Styles.bgColor,
+                    color: Color.fromARGB(255, 1, 37, 66),
                     fontSize: 38,
                     fontWeight: FontWeight.bold),
               ),
-              Text(
+              const Text(
                 'Login to your account',
                 style: TextStyle(
                     fontSize: 20,
-                    color: Styles.bgColor,
+                    color: Color.fromARGB(255, 2, 58, 104),
                     fontWeight: FontWeight.w300),
               ),
               Gap(height * 0.06),
@@ -116,6 +118,41 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       decoration: InputDecoration(
                         hintText: 'Phone',
+                        hintStyle: TextStyle(
+                            color: Styles.primaryColor, letterSpacing: 0.7),
+                        fillColor: Colors.indigo.shade100,
+                        filled: true,
+                        errorStyle: TextStyle(
+                          fontSize: 14,
+                          color: const Color.fromARGB(255, 235, 195, 75),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ),
+                          borderSide: BorderSide.none,
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: height * 0.02, horizontal: width * 0.08),
+                      ),
+                    ),
+                    Gap(height * 0.03),
+                    TextFormField(
+                      controller: usernameCtl,
+                      keyboardType: TextInputType.text,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please provide a valid username';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        setState(() {
+                          username = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Username',
                         hintStyle: TextStyle(
                             color: Styles.primaryColor, letterSpacing: 0.7),
                         fillColor: Colors.indigo.shade100,
@@ -164,8 +201,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                             // phoneCtl.clear();
                             sendOtp();
-                            // Navigator.of(context).pushNamed(OTPScreen.routename,
-                            //     arguments: phone);
+                            Navigator.of(context).pushNamed(OTPScreen.routename,
+                                arguments: [phone, username]);
                           }
                           FocusScope.of(context).unfocus();
                         },
