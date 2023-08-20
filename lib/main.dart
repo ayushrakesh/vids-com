@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vids_com/routes.dart';
 import 'package:vids_com/screens/all_news_screen.dart';
@@ -26,7 +27,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
+      home: StreamBuilder(
+        builder: (ctx, stream) {
+          if (stream.hasData) {
+            return AllNewsScreen();
+          }
+          return LoginScreen();
+        },
+        stream: FirebaseAuth.instance.authStateChanges(),
+      ),
       // home: AllNewsScreen(),
       // home: OTPScreen(),
       routes: routes,

@@ -7,6 +7,8 @@ import 'package:vids_com/screens/news_details.dart';
 import 'package:vids_com/widgets/chewei_item.dart';
 
 class AllNewsScreen extends StatefulWidget {
+  static const routeName = 'all-news';
+
   @override
   State<AllNewsScreen> createState() => _AllNewsScreenState();
 }
