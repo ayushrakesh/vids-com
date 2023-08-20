@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
-import 'package:vids_com/screens.dart/news_details.dart';
+import 'package:vids_com/screens/news_details.dart';
 import 'package:vids_com/widgets/chewei_item.dart';
 
 class AllNewsScreen extends StatefulWidget {

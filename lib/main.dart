@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:vids_com/routes.dart';
-import 'package:vids_com/screens.dart/all_news_screen.dart';
-import 'package:vids_com/screens.dart/login_screen.dart';
-import 'package:vids_com/screens.dart/otp_screen.dart';
+import 'package:vids_com/screens/all_news_screen.dart';
+import 'package:vids_com/screens/login_screen.dart';
+import 'package:vids_com/screens/otp_screen.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'screens.dart/news_details.dart';
+import 'screens/news_details.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: LoginScreen(),
-      home: AllNewsScreen(),
+      home: LoginScreen(),
+      // home: AllNewsScreen(),
       // home: OTPScreen(),
       routes: routes,
     );

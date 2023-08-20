@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final phoneCtl = TextEditingController();
   final smsCtl = TextEditingController();
   final usernameCtl = TextEditingController();
+  final otpCtl = TextEditingController();
 
   String? phone;
   String? sms;
@@ -28,25 +29,27 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool isLoading = false;
 
-  void submitForm() async {}
-
   void sendOtp() async {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+    }
+    FocusScope.of(context).unfocus();
+
     FirebaseAuth auth = FirebaseAuth.instance;
 
     await auth.verifyPhoneNumber(
       phoneNumber: '+91 $phone',
-      codeSent: (String verificationId, int? resendToken) async {
-        print(verificationId);
-        print(resendToken);
-        // Update the UI - wait for the user to enter the SMS code
-        String smsCode = 'xxxx';
+      codeSent: (String verificationId, int? resendToken) {
+        print('verification id in login screen is $verificationId');
 
-        // Create a PhoneAuthCredential with the code
-        PhoneAuthCredential credential = PhoneAuthProvider.credential(
-            verificationId: verificationId, smsCode: smsCode);
-
-        // Sign the user in (or link) with the credential
-        await auth.signInWithCredential(credential);
+        Navigator.of(context).pushNamed(
+          OTPScreen.routename,
+          arguments: [
+            phone,
+            username,
+            verificationId,
+          ],
+        );
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         print(verificationId);
@@ -58,6 +61,12 @@ class _LoginScreenState extends State<LoginScreen> {
         print(error);
       },
     );
+    phoneCtl.clear();
+    usernameCtl.clear();
+    // setState(() {
+    //   phone = '';
+    //   username = '';
+    // });
   }
 
   @override
@@ -195,17 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: width * 0.3, vertical: height * 0.02),
                         ),
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            formKey.currentState!.save();
-
-                            // phoneCtl.clear();
-                            sendOtp();
-                            Navigator.of(context).pushNamed(OTPScreen.routename,
-                                arguments: [phone, username]);
-                          }
-                          FocusScope.of(context).unfocus();
-                        },
+                        onPressed: sendOtp,
                         child: Text(
                           'Next',
                           style: TextStyle(

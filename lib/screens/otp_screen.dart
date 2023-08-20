@@ -16,18 +16,46 @@ class _OTPScreenState extends State<OTPScreen> {
   final height = Get.height;
   final width = Get.width;
 
-  String? otp;
+  final formKey = GlobalKey<FormState>();
+
+  String otp = '';
+  String phone = '';
+  String username = '';
+  String verificationId = '';
 
   final otpCtl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final phone =
-        (ModalRoute.of(context)!.settings.arguments as List)[0] as String;
-    final username =
-        (ModalRoute.of(context)!.settings.arguments as List)[1] as String;
+    final arguments = ModalRoute.of(context)!.settings.arguments as List;
 
-    final formKey = GlobalKey<FormState>();
+    setState(() {
+      phone = arguments[0];
+      username = arguments[1];
+      verificationId = arguments[2];
+    });
+
+    final FirebaseAuth auth = FirebaseAuth.instance;
+
+    void verifyPhone() async {
+      print('verifcation id in otp screen is $verificationId');
+      print('otp entered is $otp');
+
+      if (formKey.currentState!.validate()) {
+        formKey.currentState!.save();
+      }
+
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: verificationId, smsCode: otp);
+
+      // Sign the user in (or link) with the credential
+      await auth.signInWithCredential(credential);
+
+      // otpCtl.clear();
+      // otpCtl.clear();
+
+      FocusScope.of(context).unfocus();
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -53,12 +81,12 @@ class _OTPScreenState extends State<OTPScreen> {
                 controller: otpCtl,
                 keyboardType: TextInputType.phone,
                 validator: (value) {
-                  if (value!.length < 10) {
-                    return 'Please provide a valid phone number';
+                  if (value!.isEmpty) {
+                    return 'Please enter correct otp';
                   }
                   return null;
                 },
-                onSaved: (value) {
+                onChanged: (value) {
                   setState(() {
                     otp = value;
                   });
@@ -69,9 +97,9 @@ class _OTPScreenState extends State<OTPScreen> {
                       TextStyle(color: Styles.primaryColor, letterSpacing: 0.7),
                   fillColor: Colors.indigo.shade100,
                   filled: true,
-                  errorStyle: TextStyle(
+                  errorStyle: const TextStyle(
                     fontSize: 14,
-                    color: const Color.fromARGB(255, 235, 195, 75),
+                    color: Color.fromARGB(255, 235, 195, 75),
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
@@ -119,16 +147,9 @@ class _OTPScreenState extends State<OTPScreen> {
                     padding: EdgeInsets.symmetric(
                         horizontal: width * 0.3, vertical: height * 0.02),
                   ),
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-
-                      // otpCtl.clear();
-                    }
-                    FocusScope.of(context).unfocus();
-                  },
+                  onPressed: verifyPhone,
                   child: Text(
-                    'Next',
+                    'Verify Phone',
                     style: TextStyle(color: Styles.bgColor, letterSpacing: 0.6),
                   ),
                 ),
