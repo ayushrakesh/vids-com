@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,37 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
 
   VideoPlayerController? controller;
 
+  void showAlert() {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            content: const Text(
+              'Alert, are you sure to logout!',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  await FirebaseAuth.instance.signOut();
+                },
+                child: Text('Yes'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('No'),
+              ),
+            ],
+            actionsAlignment: MainAxisAlignment.spaceBetween,
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +58,51 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
         // toolbarHeight: kToolbarHeight,
         title: Text('News'),
         centerTitle: true,
+        actions: [
+          DropdownButton(
+            // padding: EdgeInsets.all(5),
+            // hint: Icon(Icons.more_vert),
+            elevation: 0,
+            style: const TextStyle(color: Colors.black),
+            items: [
+              DropdownMenuItem(
+                alignment: Alignment.centerRight,
+                value: 'logout',
+                child: Container(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.exit_to_app,
+                        size: 24,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      SizedBox(
+                        width: width * 0.05,
+                      ),
+                      Text(
+                        'Logout',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+            icon: const Padding(
+              padding: EdgeInsets.only(right: 8),
+              child: Icon(
+                Icons.more_vert,
+                size: 24,
+                color: Colors.black,
+              ),
+            ),
+            onChanged: (itemidentifier) {
+              if (itemidentifier == 'logout') {
+                showAlert();
+              }
+            },
+          ),
+        ],
       ),
       floatingActionButton: IconButton(
         onPressed: () {

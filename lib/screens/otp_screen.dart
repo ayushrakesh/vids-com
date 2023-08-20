@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -70,7 +71,16 @@ class _OTPScreenState extends State<OTPScreen> {
       print('verifcation id in otp screen is $verificationId');
       print('otp entered is $otp');
 
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .set({
+        'username': username,
+        'phone': phone,
+      });
+
       otpCtl.clear();
+
       setState(() {
         otp = '';
       });

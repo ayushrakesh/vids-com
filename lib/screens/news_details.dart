@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
@@ -23,6 +24,8 @@ class _NewsDetailsState extends State<NewsDetails> {
 
   final commentCtl = TextEditingController();
   String comment = '';
+
+  final currentUserid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +59,15 @@ class _NewsDetailsState extends State<NewsDetails> {
     void addComment() async {
       FocusScope.of(context).unfocus();
 
+      final userdata = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUserid)
+          .get();
+      final username = userdata.get('username');
+
       final newComment = {
         'comment': comment,
-        'commented-by': 'testing-user',
+        'commented-by': username,
       };
 
       final data =
