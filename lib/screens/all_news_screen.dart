@@ -6,6 +6,10 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import 'package:vids_com/screens/news_details.dart';
 import 'package:vids_com/widgets/chewei_item.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
+import 'video_post_screen.dart';
 
 class AllNewsScreen extends StatefulWidget {
   static const routeName = 'all-news';
@@ -19,6 +23,8 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
   final width = Get.width;
 
   VideoPlayerController? controller;
+
+  XFile? video;
 
   void showAlert() {
     showDialog(
@@ -49,6 +55,22 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
             actionsAlignment: MainAxisAlignment.spaceBetween,
           );
         });
+  }
+
+  void takeVideo() async {
+    final pvideo = await ImagePicker().pickVideo(
+      source: ImageSource.camera,
+      maxDuration: const Duration(
+        seconds: 5,
+      ),
+    );
+    setState(() {
+      video = pvideo;
+    });
+    print(video);
+
+    Navigator.of(context)
+        .pushNamed(VideoPostScreen.routeName, arguments: video);
   }
 
   @override
@@ -105,11 +127,7 @@ class _AllNewsScreenState extends State<AllNewsScreen> {
         ],
       ),
       floatingActionButton: IconButton(
-        onPressed: () {
-          controller!.value.isPlaying
-              ? controller!.play()
-              : controller!.pause();
-        },
+        onPressed: takeVideo,
         color: Colors.black,
         style: IconButton.styleFrom(
           backgroundColor: Colors.amber,

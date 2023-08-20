@@ -154,7 +154,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                               Icons.thumb_up_alt_rounded),
                                           onPressed: like,
                                         ),
-                                        Gap(width * 0.030),
+                                        Gap(width * 0.020),
                                         Text(
                                           stream.data!.get('likes').toString(),
                                           style: const TextStyle(
@@ -171,7 +171,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                               Icons.thumb_down_alt_rounded),
                                           onPressed: dislike,
                                         ),
-                                        Gap(width * 0.030),
+                                        Gap(width * 0.020),
                                         Text(
                                           stream.data!
                                               .get('dislikes')
@@ -198,10 +198,17 @@ class _NewsDetailsState extends State<NewsDetails> {
                               children: [
                                 Row(
                                   children: [
-                                    Text('Posted-by '),
-                                    Text(stream.data!
-                                        .get('posted-by')
-                                        .toString()),
+                                    const Text(
+                                      'Posted-by : ',
+                                      style: TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 110, 109, 109)),
+                                    ),
+                                    Text(
+                                      stream.data!.get('posted-by').toString(),
+                                      style: const TextStyle(
+                                          fontSize: 18, color: Colors.black),
+                                    ),
                                   ],
                                 ),
                                 Text(stream.data!.get('date').toString()),

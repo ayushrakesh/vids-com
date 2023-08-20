@@ -35,6 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     FocusScope.of(context).unfocus();
 
+    phone!.trim();
+
     FirebaseAuth auth = FirebaseAuth.instance;
 
     await auth.verifyPhoneNumber(
