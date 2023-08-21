@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
+import 'package:vids_com/screens/news_details.dart';
 import 'package:vids_com/widgets/chewei_item.dart';
 
 class VideoPostScreen extends StatefulWidget {
@@ -71,7 +72,7 @@ class _VideoPostScreenState extends State<VideoPostScreen> {
       // File file = File(filePath);
 
       final storageRF = FirebaseStorage.instance.ref();
-      final folderRf = storageRF.child('videos');
+      final folderRf = storageRF.child('news-videos');
       final videoref = folderRf.child('$title-$category-$location.mp4');
 
       print(videoref);
@@ -109,6 +110,7 @@ class _VideoPostScreenState extends State<VideoPostScreen> {
         isloading = false;
       });
 
+      Navigator.of(context).pushNamed(NewsDetails.routeName);
       // try {
 
       // } on firebase_core.FirebaseException catch (e) {

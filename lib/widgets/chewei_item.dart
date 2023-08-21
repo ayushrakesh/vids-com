@@ -25,6 +25,16 @@ class _CheweiItemState extends State<CheweiItem> {
       aspectRatio: 16 / 9,
       looping: widget.looping,
       autoInitialize: true,
+      autoPlay: false,
+      errorBuilder: (ctz, error) {
+        return Center(
+          child: Text(
+            error,
+            style: TextStyle(color: Colors.white),
+          ),
+        );
+      },
+      showControlsOnInitialize: true,
     );
   }
 

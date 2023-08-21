@@ -39,6 +39,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     FirebaseAuth auth = FirebaseAuth.instance;
 
+    setState(() {
+      isLoading = true;
+    });
     await auth.verifyPhoneNumber(
       phoneNumber: '+91 $phone',
       codeSent: (String verificationId, int? resendToken) {
@@ -63,6 +66,11 @@ class _LoginScreenState extends State<LoginScreen> {
         print(error);
       },
     );
+
+    setState(() {
+      isLoading = false;
+    });
+
     phoneCtl.clear();
     usernameCtl.clear();
     // setState(() {
@@ -183,37 +191,41 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     Gap(height * 0.05),
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24),
-                        gradient: const LinearGradient(
-                            colors: [
-                              Color.fromARGB(255, 2, 9, 65),
-                              Color.fromARGB(255, 14, 31, 163)
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                      ),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24),
+                    isLoading
+                        ? const CircularProgressIndicator()
+                        : Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24),
+                              gradient: const LinearGradient(
+                                colors: [
+                                  Color.fromARGB(255, 2, 9, 65),
+                                  Color.fromARGB(255, 14, 31, 163),
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                            ),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                // backgroundColor: Color.fromARGB(255, 2, 9, 65),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: width * 0.3,
+                                    vertical: height * 0.02),
+                              ),
+                              onPressed: sendOtp,
+                              child: Text(
+                                'Next',
+                                style: TextStyle(
+                                    color: Styles.bgColor, letterSpacing: 0.6),
+                              ),
+                            ),
                           ),
-                          // backgroundColor: Color.fromARGB(255, 2, 9, 65),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: width * 0.3, vertical: height * 0.02),
-                        ),
-                        onPressed: sendOtp,
-                        child: Text(
-                          'Next',
-                          style: TextStyle(
-                              color: Styles.bgColor, letterSpacing: 0.6),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),

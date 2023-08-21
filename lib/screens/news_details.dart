@@ -32,6 +32,7 @@ class _NewsDetailsState extends State<NewsDetails> {
     setState(() {
       newsID =
           (ModalRoute.of(context)!.settings.arguments as List)[0] as String;
+      // print(newsID);
       // newsDocRF = (ModalRoute.of(context)!.settings.arguments as List)[1]
       //     as QueryDocumentSnapshot;
     });
